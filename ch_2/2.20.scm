@@ -1,0 +1,7 @@
+(define (same-parity x . y)
+  (let ((f (if (odd? x) odd? even?)))
+    (define (pty y)
+      (cond ((null? y) nil)
+            ((f (car y)) (append (list (car y)) (pty (cdr y))))
+            (else (pty (cdr y)))))
+    (append (list x) (pty y))))
