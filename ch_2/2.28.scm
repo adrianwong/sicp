@@ -1,0 +1,5 @@
+(define (fringe lst)
+  (cond ((null? lst) nil)
+        ((not (pair? lst)) (list lst))
+        (else (append (fringe (car lst))
+                      (fringe (cdr lst))))))
