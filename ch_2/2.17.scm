@@ -1,5 +1,4 @@
-(define (last-pair l)
-  (let ((next (cdr l)))
-    (if (null? next)
-        l
-        (last-pair next))))
+(define (last-pair lst)
+  (cond ((null? lst) nil)
+        ((null? (cdr lst)) lst)
+        (else (last-pair (cdr lst)))))
