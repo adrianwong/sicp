@@ -1,0 +1,20 @@
+(define (reverse-r sequence)
+  (fold-right (lambda (x y) (append y (list x))) nil sequence))
+
+(define (reverse-l sequence)
+  (fold-left (lambda (x y) (cons y x)) nil sequence))
+
+(reverse-r (list 1 2 3))
+; (append reverse-r (list 1))
+; (append (append reverse-r (list 2)) (list 1))
+; (append (append (append reverse-r (list 3)) (list 2)) (list 1))
+; (append (append (append nil (list 3)) (list 2)) (list 1))
+; (append (append (list 3) (list 2)) (list 1))
+; (append (list 3 2) (list 1))
+; (list 3 2 1)
+
+(reverse-l (list 1 2 3))
+; (iter (cons 1 nil) (list 2 3))
+; (iter (cons 2 (cons 1 nil)) (list 3))
+; (iter (cons 3 (cons 2 (cons 1 nil))) nil)
+; (cons 3 (cons 2 (cons 1 nil)))
