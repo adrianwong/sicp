@@ -1,3 +1,38 @@
+; Taken from section 3.3.3 (representing tables) for testing
+(define (make-table)
+  (let ((local-table (list '*table*)))
+    (define (lookup key-1 key-2)
+      (let ((subtable (assoc key-1 (cdr local-table))))
+        (if subtable
+            (let ((record (assoc key-2 (cdr subtable))))
+              (if record
+                  (cdr record)
+                  false))
+            false)))
+    (define (insert! key-1 key-2 value)
+      (let ((subtable (assoc key-1 (cdr local-table))))
+        (if subtable
+            (let ((record (assoc key-2 (cdr subtable))))
+              (if record
+                  (set-cdr! record value)
+                  (set-cdr! subtable
+                            (cons (cons key-2 value)
+                                  (cdr subtable)))))
+            (set-cdr! local-table
+                      (cons (list key-1
+                                  (cons key-2 value))
+                            (cdr local-table)))))
+      'ok)
+    (define (dispatch m)
+      (cond ((eq? m 'lookup-proc) lookup)
+            ((eq? m 'insert-proc!) insert!)
+            (else (error "Unknown operation - TABLE" m))))
+    dispatch))
+
+(define operation-table (make-table))
+(define get (operation-table 'lookup-proc))
+(define put (operation-table 'insert-proc!))
+
 ; (a)
 ; The procedures `number?` and `variable?` are simply predicates
 ; whose behaviours do not change depending on a type tag. There
@@ -32,6 +67,7 @@
               (make-product
                (deriv (multiplier exp) var)
                (multiplicand exp))))
+
   ; Interface to the rest of the system
   (put 'deriv '+ deriv-sum)
   (put 'deriv '* deriv-product))
@@ -53,3 +89,13 @@
 
 ; (d)
 ; All that is required is to change the order of arguments to `put`
+
+(define (display-nl f)
+  (display f)
+  (newline))
+
+(install-derivative-package)
+(display-nl (deriv '(+ x 3) 'x))
+(display-nl (deriv '(* x y) 'x))
+(display-nl (deriv '(* (* x y) (+ x 3)) 'x))
+(display-nl (deriv '(** x 3) 'x))
