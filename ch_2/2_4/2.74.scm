@@ -11,13 +11,15 @@
 
 (define (get-record f name) (apply-generic 'get-record f name))
 (define (get-salary f name) (apply-generic 'get-salary f name))
+
 (define (find-employee-record f name)
   (if (null? f)
       '()
-      (let ((record (get-record (car f) name)))
+      (let ((record (get-record (car f) name))
+            (next-file (find-employee-record (cdr f) name)))
         (if (null? record)
-            (find-employee-record (cdr f) name)
-            record))))
+            next-file
+            (cons record next-file)))))
 
 (define (install-div1-package)
   (define (record name f)
