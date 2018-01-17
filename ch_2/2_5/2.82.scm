@@ -17,7 +17,7 @@
 
 ; Install the scheme-number, rectangular and complex packages
 
-(apply-generic 'add (make-scheme-number 2) (make-scheme-number 4))
+(add (make-scheme-number 2) (make-scheme-number 4))
 ; '(scheme-number . 6)
-(apply-generic 'add (make-scheme-number 1) (make-complex-from-real-imag 2 7))
+(add (make-scheme-number 1) (make-complex-from-real-imag 2 7))
 ; '(complex rectangular 3 . 7)

@@ -28,9 +28,9 @@
     (apply-coerced type-tags)))
 
 ; Tests
-(apply-generic 'mul (make-scheme-number 2) (make-scheme-number 4))
+(mul (make-scheme-number 2) (make-scheme-number 4))
 ; '(scheme-number . 8)
-(apply-generic 'sub (make-real 6) (make-rational 3 2))
+(sub (make-real 6) (make-rational 3 2))
 ; '(real . 4.5)
-(apply-generic 'add (make-scheme-number 1) (make-complex-from-real-imag 2 7))
+(add (make-scheme-number 1) (make-complex-from-real-imag 2 7))
 ; '(complex rectangular 3.0 . 7)
