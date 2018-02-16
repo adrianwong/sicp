@@ -12,13 +12,13 @@
 
 (define (has-cycle? x)
   (let ((visited '()))
-    (define (has-cycle-internal x)
+    (define (has-cycle-iter x)
       (cond ((null? (cdr x)) #f)
             ((memq (cadr x) visited) #t)
             (else
              (set! visited (cons (car x) visited))
-             (has-cycle-internal (cdr x)))))
-    (has-cycle-internal x)))
+             (has-cycle-iter (cdr x)))))
+    (has-cycle-iter x)))
 
 (define x '(1 2 3))
 (has-cycle? x) ; #f
