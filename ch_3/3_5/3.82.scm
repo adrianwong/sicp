@@ -9,14 +9,13 @@
                        (square (- y yc)))
                     (square radius))))
 
-; Cumulative successes
 (define (monte-carlo experiment)
   (define monte-carlo-internal
     (cons-stream
      (if (experiment) 1 0)
      (stream-map (lambda (x) (if (experiment) (+ x 1) x))
                  monte-carlo-internal)))
-  monte-carlo-internal)
+  (div-streams monte-carlo-internal integers))
 
 (define (estimate-integral P x1 x2 y1 y2)
   (define (experiment)
@@ -30,7 +29,7 @@
       (cons-stream area area-stream))
     (cons-stream
      area
-     (mul-streams area-stream (div-streams (monte-carlo experiment) integers)))))
+     (mul-streams area-stream (monte-carlo experiment)))))
 
 (exact->inexact (/ (stream-ref (estimate-integral (P 5 7 3) 2 8 4 10) 100)
                    (square 3)))
