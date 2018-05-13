@@ -1,15 +1,16 @@
-(define (eval-and exps env)
-  (if (true? (eval (first-exp exps) env))
-      (eval-and (rest-exps exps) env)
+(define (eval-and exp env)
+  (if (true? (eval (first-exp exp) env))
+      (eval-and (rest-exps exp) env)
       false))
 
-(define (eval-or exps env)
-  (if (true? (eval (first-exp exps) env))
+(define (eval-or exp env)
+  (if (true? (eval (first-exp exp) env))
       true
-      (eval-or (rest-exps exps) env)))
+      (eval-or (rest-exps exp) env)))
 
 (define (and? exp) (tagged-list? exp 'and))
 (define (or? exp) (tagged-list? exp 'or))
 
-(put 'op 'and eval-and)
-(put 'op 'or eval-or)
+; Add to `eval`
+((and? exp) (eval-and exp env))
+((or? exp) (eval-or exp env))
