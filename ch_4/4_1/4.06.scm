@@ -10,3 +10,11 @@
 
 ; Add to `eval`
 ((let? exp) (eval (let->combination exp) env))
+
+; Test
+(let->combination '(let ((x 3) (y 4) (z 5))
+                     (* x y z)))
+
+((lambda (x y z)
+   (* x y z))
+ 3 4 5)
