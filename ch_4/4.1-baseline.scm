@@ -1,3 +1,5 @@
+#lang sicp
+
 (define (list-of-values exps env)
   (if (no-operands? exps)
       '()
@@ -253,8 +255,6 @@
         (else
          (error "Unknown expression type: EVAL" exp))))
 
-(define apply-in-underlying-scheme apply)
-
 (define (apply procedure arguments)
   (cond ((primitive-procedure? procedure)
          (apply-primitive-procedure procedure arguments))
@@ -268,5 +268,7 @@
         (else
          (error
           "Unknown procedure type: APPLY" procedure))))
+
+(define apply-in-underlying-scheme apply)
 
 (driver-loop)
